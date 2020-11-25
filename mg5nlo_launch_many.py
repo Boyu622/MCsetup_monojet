@@ -17,13 +17,15 @@ for line in infile:
     if "nevents" in line: nevents = line.split("=")[1].split("\n")[0].strip()
     if "ptj" in line: ptj = line.split("=")[1].split("\n")[0].strip()
     if "Qcut" in line: Qcut = line.split("=")[1].split("\n")[0].strip()
+    if "repeat" in line: repeat_index = line.split("=")[1].split("\n")[0].strip()
 infile.close()
 orgdir = os.getcwd()
 jobdir = orgdir + "/results/condor_job"
 
-for MXd in MXd_array:
+for i in range(int(repeat_index)):
+  for MXd in MXd_array:
     for MY1 in MY1_array:
-        tag = "med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut)
+        tag = "med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,i)
         logdir = orgdir + "/results/%s"%tag
         os.system("mkdir -p %s"%logdir)
         filename=jobdir+"/run_%s.sh"%tag
@@ -32,15 +34,17 @@ for MXd in MXd_array:
         f.write("cd "+orgdir+"\n")
         f.write("export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase \n")
         f.write("source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh \n")
-        f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut))
+        f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s %s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,i))
         f.close()
 
         output =logdir+"/" + tag + ".out"
+        error  =logdir+"/" + tag + ".err"
         filename_sub=jobdir+"/sub_" + tag + ".sub"
         f_sub=open(filename_sub,'w')
         f_sub.write("universe = vanilla \n")
         f_sub.write("executable  = " + filename + " \n")
         f_sub.write("output  = " + output + " \n")
+        f_sub.write("error  = " + error + " \n")
         f_sub.write('requirements = (OpSysAndVer =?= "CentOS7")\n')
         f_sub.write("+JobFlavour = \"nextweek\" \n")
         f_sub.write("queue \n")

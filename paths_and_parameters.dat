@@ -1,9 +1,10 @@
 MG5_path = /afs/cern.ch/work/b/bgao/private/MG5_aMC_v2_7_3
 lhapdf_path = /afs/cern.ch/work/b/bgao/private/MG5_aMC_v2_7_3/HEPTools/lhapdf6/lib
-MXd_array = [100,200,300]
-MY1_array = [100,200,300]
-model = A1
+MXd_array = [750]
+MY1_array = [2250]
+model = V2
 ebeam = 65000
-nevents = 200000
+nevents = 15000
 ptj = 15
-Qcut = 40
+Qcut = 15
+repeat = 1

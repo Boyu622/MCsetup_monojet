@@ -45,10 +45,10 @@ namespace Rivet {
     void analyze(const Event& event) {
       
       const Jets jets = apply<JetAlg>(event, "Jets").jetsByPt(Cuts::pT > 20*GeV && Cuts::abseta < 2.8);
-      _histnjets->fill(js.size());
-      _histjetpt0->fill(js[0].pT());
-      _histjetpt1->fill(js[1].pT());
-      _histjetpt2->fill(js[2].pT());
+      _histnjets->fill(jets.size());
+      _histjetpt0->fill(jets[0].pT());
+      _histjetpt1->fill(jets[1].pT());
+      _histjetpt2->fill(jets[2].pT());
       const Particles elecs = apply<ParticleFinder>(event, "Electrons").particlesByPt();
       const Particles mus = apply<ParticleFinder>(event, "Muons").particlesByPt();
       MSG_DEBUG("Number of raw jets, electrons, muons = "

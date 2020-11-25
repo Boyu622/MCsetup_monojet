@@ -22,9 +22,9 @@ Run parameters should also be specified. One can very beam energy, nevents (tota
 
 Therefore, one runs the code following:
 
-`python mg5nlo_launch_single.py {mDM} {Mmed} {model} {single-beam-energy} {nevents} {ptj} {Qcut}`
+`python mg5nlo_launch_single.py {mDM} {Mmed} {model} {Ebeam_single} {nevents} {ptj} {Qcut} {repeat}`
 
-Here, the masses and single beam energy are in the unit of GeV. The model will be four s-channel dmsimp benchmark models (A1, A2, V1 and V2, see arXiv: 1703.05703). The nevents are recommended to be larger than 100K in order for enough events after merging and monojet event selection. 
+Here, the masses and single beam energy are in the unit of GeV. The model will be four s-channel dmsimp benchmark models (A1, A2, V1 and V2, see arXiv: 1703.05703). Due to significant loss of events during the merging and monojet event cut / veto, and in light of the total time consumed for a single job, it is statistically necessary to repeat the simulation for a point in parameter space where the nevents is recommended to be ~15K with repeat setting to 15.
 
 We will use the FxFx algorithm (ickkw = 3) for event merging. The Qcut is in the unit of GeV which controls the merging scale when showering the events. It should be larger than twice the value of ptj. The merging scale can be validated via pt distribution of the leading, sub-leading and third jet. The relevant plots will be included in our Rivet analysis code.
 
@@ -38,8 +38,8 @@ For each job, the log file and hepmc file will be collected automatically to the
 
 ## Rivet
 
-We recommend using Rivet for event analysis. Due to the large software dependence in Rivet, we suggest using Docker container where a detailed description for the setup can be found on:
+If you want to check things quickly, the validated Rivet analysis code for monojet can be found in this repository. Due to the large software dependence in Rivet, we suggest using Docker container where a detailed description for the setup can be found on:
 
 [https://github.com/DarkJets-hep/excitedquarks-rivet](https://github.com/DarkJets-hep/excitedquarks-rivet)
 
-Following the above document, the `rivet_monojet.cc` and `rivet_monojet.plot` will plot the 1st, 2nd and 3rd jet pt distributions before the monojet event selection. It will also show MET distribution after the event selection.
+One will need to build analysis for the first time by typing: `rivet-mkanalysis rivet_monojet`. Following the above document, the `rivet_monojet.cc` and `rivet_monojet.plot` will plot the 1st, 2nd and 3rd jet pt distributions before the monojet event selection. It will also show MET distribution after the event selection.

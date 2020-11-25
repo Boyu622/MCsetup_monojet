@@ -1,8 +1,8 @@
 import os,sys,pwd
 from exclCalc import *
 
-if len(sys.argv)<8:
-    print "Please pass arguments following: python mg5nlo_launch_single.py {mDM} {Mmed} {model} {single-beam-energy} {nevents} {ptj} {Qcut}"
+if len(sys.argv)<9:
+    print "Please pass arguments following: python mg5nlo_launch_single.py {mDM} {Mmed} {model} {Ebeam_single} {nevents} {ptj} {Qcut} {repeat}"
     sys.exit()
 else:
     MXd = sys.argv[1]
@@ -12,6 +12,7 @@ else:
     nevents = sys.argv[5]
     ptj = sys.argv[6]
     Qcut = sys.argv[7]
+    repeat_index = sys.argv[8]
     
 if model == "A1" or model == "a1":
     gAXd, gVXd, gAq, gVq, gAl, gVl = 1.0, 0.0, 0.25, 0.0, 0.0, 0.0
@@ -43,7 +44,7 @@ file = open('mg5.txt', 'w')
 file.write('import model DMsimp_s_spin1 \n')
 file.write('generate p p > xd xd~ j [QCD] \n')
 file.write('add process p p > xd xd~ j j [QCD] \n')
-file.write('output med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s \n'%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut))
+file.write('output med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s \n'%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
 file.write('launch \n')
 file.write('set my1 %s \n'%str(MY1))
 file.write('set mxd %s \n'%str(MXd))
@@ -76,13 +77,13 @@ file.write('set ebeam2 %s \n'%ebeam)
 file.write('set nevents %s \n'%nevents)
 file.write('set pdlabel lhapdf \n')
 file.write('set lhaid 260000 \n')
-file.write('set ptj 15 \n'%ptj)
+file.write('set ptj %s \n'%ptj)
 file.write('set Qcut %s \n'%Qcut)
 file.write('set njmax 1 \n')
 file.close()
 
 os.system("%s/bin/mg5_aMC mg5.txt"%mg5dir)
-os.system("cat /tmp/%s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s/Cards/param_card.dat"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut))
-os.system("cat /tmp/%s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s/Cards/run_card.dat"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut))
-os.system("cp /tmp/%s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s/Events/run_01/*.hepmc.gz %s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s.hepmc.gz"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,sdir,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut))
+os.system("cat /tmp/%s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s/Cards/param_card.dat"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
+os.system("cat /tmp/%s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s/Cards/run_card.dat"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
+os.system("cp /tmp/%s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s/Events/run_01/*.hepmc.gz %s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s.hepmc.gz"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index,sdir,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
 os.chdir(odir)
