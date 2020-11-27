@@ -16,6 +16,9 @@ namespace Rivet {
 
     DEFAULT_RIVET_ANALYSIS_CTOR(rivet_monojet);
     void init() {
+      const FinalState cnfs;
+      declare(FastJets(cnfs, FastJets::ANTIKT, 0.4), "JS");
+
       FastJets jets(FinalState(Cuts::abseta < 4.9), FastJets::ANTIKT, 0.4);
       SmearedJets recojets(jets, JET_SMEAR_ATLAS_RUN1);
       declare(recojets, "Jets");
@@ -37,18 +40,17 @@ namespace Rivet {
       book(_histjetpt0 ,"leading_jet_pt", 236, 20, 1200);
       book(_histjetpt1 ,"subleading_jet_pt", 126, 20, 600);
       book(_histjetpt2 ,"third_jet_pt", 76, 20, 400);
-        
-      book(_histmet ,"MET", 10, 200, 1200);
+      book(_histmet ,"MET", 1, 250, 1250);
     }
 
 
     void analyze(const Event& event) {
-      
+      const Jets js = apply<JetAlg>(event, "JS").jetsByPt();
       const Jets jets = apply<JetAlg>(event, "Jets").jetsByPt(Cuts::pT > 20*GeV && Cuts::abseta < 2.8);
-      _histnjets->fill(jets.size());
-      _histjetpt0->fill(jets[0].pT());
-      _histjetpt1->fill(jets[1].pT());
-      _histjetpt2->fill(jets[2].pT());
+      _histnjets->fill(js.size());
+      _histjetpt0->fill(js[0].pT());
+      _histjetpt1->fill(js[1].pT());
+      _histjetpt2->fill(js[2].pT());
       const Particles elecs = apply<ParticleFinder>(event, "Electrons").particlesByPt();
       const Particles mus = apply<ParticleFinder>(event, "Muons").particlesByPt();
       MSG_DEBUG("Number of raw jets, electrons, muons = "
