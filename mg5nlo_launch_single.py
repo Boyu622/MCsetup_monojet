@@ -41,6 +41,8 @@ os.system("mkdir -p %s"%sdir)
 os.chdir(wdir)
 
 file = open('mg5.txt', 'w')
+file.write('set low_mem_multicore_nlo_generation True \n')
+file.write('set nb_core X \n')
 file.write('import model DMsimp_s_spin1 \n')
 file.write('generate p p > xd xd~ j [QCD] \n')
 file.write('add process p p > xd xd~ j j [QCD] \n')
