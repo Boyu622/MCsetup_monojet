@@ -40,12 +40,14 @@ for i in range(int(repeat_index)):
 
         output =logdir+"/" + tag + ".out"
         error  =logdir+"/" + tag + ".err"
+        logname=logdir+"/" + tag + ".log"
         filename_sub=jobdir+"/sub_" + tag + ".sub"
         f_sub=open(filename_sub,'w')
         f_sub.write("universe = vanilla \n")
         f_sub.write("executable  = " + filename + " \n")
         f_sub.write("output  = " + output + " \n")
         f_sub.write("error  = " + error + " \n")
+        f_sub.write("log  = " + logname + " \n")
         f_sub.write('requirements = (OpSysAndVer =?= "CentOS7")\n')
         f_sub.write("+JobFlavour = \"nextweek\" \n")
         f_sub.write("queue \n")
