@@ -25,8 +25,9 @@ jobdir = orgdir + "/results/condor_job"
 for i in range(int(repeat_index)):
   for MXd in MXd_array:
     for MY1 in MY1_array:
+        tag0 = "med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut)
         tag = "med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,i)
-        logdir = orgdir + "/results/%s"%tag
+        logdir = orgdir + "/results/%s"%tag0
         os.system("mkdir -p %s"%logdir)
         filename=jobdir+"/run_%s.sh"%tag
         f=open(filename,'w')
