@@ -6,5 +6,5 @@ model = V2
 ebeam = 65000
 nevents = 15000
 ptj = 15
-Qcut = 15
-repeat = 1
+Qcut = 40
+repeat = 15
