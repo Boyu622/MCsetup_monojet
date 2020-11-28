@@ -7,4 +7,4 @@ ebeam = 65000
 nevents = 15000
 ptj = 15
 Qcut = 40
-repeat = 15
+repeat = 10

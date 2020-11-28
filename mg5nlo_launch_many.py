@@ -38,8 +38,8 @@ for i in range(int(repeat_index)):
         f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s %s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,i))
         f.close()
 
-        output =logdir+"/" + tag + ".out"
-        error  =logdir+"/" + tag + ".err"
+        output =logdir+"/" + tag0 + ".out"
+        error  =logdir+"/" + tag0 + ".err"
         filename_sub=jobdir+"/sub_" + tag + ".sub"
         f_sub=open(filename_sub,'w')
         f_sub.write("universe = vanilla \n")
