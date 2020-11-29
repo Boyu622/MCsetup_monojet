@@ -30,7 +30,7 @@ if model == "V2" or model == "v2":
 username =  pwd.getpwuid(os.getuid())[0]
 wdir = "/tmp/%s/"%username
 odir = os.getcwd()
-sdir = odir + "/results/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut)
+sdir = odir + "/results/nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut)
 infile = open("paths_and_parameters.dat","r")
 for line in infile:
     if "MG5_path" in line: mg5dir = line.split("=")[1].split("\n")[0]
@@ -43,7 +43,7 @@ mg5file.write('set low_mem_multicore_nlo_generation True \n')
 mg5file.write('import model DMsimp_s_spin1 \n')
 mg5file.write('generate p p > xd xd~ j [QCD] \n')
 mg5file.write('add process p p > xd xd~ j j [QCD] \n')
-mg5file.write('output med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s \n'%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
+mg5file.write('output nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s \n'%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
 mg5file.write('launch \n')
 mg5file.write('set my1 %s \n'%str(MY1))
 mg5file.write('set mxd %s \n'%str(MXd))
@@ -82,7 +82,7 @@ mg5file.write('set njmax 1 \n')
 mg5file.close()
 
 os.system("%s/bin/mg5_aMC mg5.txt"%mg5dir)
-os.system("cat /tmp/%s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s/Cards/param_card.dat"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
-os.system("cat /tmp/%s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s/Cards/run_card.dat"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
-os.system("cp /tmp/%s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s/Events/run_01/*.hepmc.gz %s/med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s.hepmc.gz"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index,sdir,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
+os.system("cat /tmp/%s/nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s/Cards/param_card.dat"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
+os.system("cat /tmp/%s/nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s/Cards/run_card.dat"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
+os.system("cp /tmp/%s/nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s/Events/run_01/*.hepmc.gz %s/nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s.hepmc.gz"%(username,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index,sdir,str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,repeat_index))
 os.chdir(odir)
