@@ -31,6 +31,7 @@ username =  pwd.getpwuid(os.getuid())[0]
 wdir = "/tmp/%s/"%username
 odir = os.getcwd()
 sdir = odir + "/results/nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut)
+os.system("mkdir -p %s"%sdir)
 infile = open("paths_and_parameters.dat","r")
 for line in infile:
     if "MG5_path" in line: mg5dir = line.split("=")[1].split("\n")[0]
