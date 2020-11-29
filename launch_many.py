@@ -15,9 +15,11 @@ for line in infile:
     if "model" in line: model = line.split("=")[1].split("\n")[0].strip()
     if "ebeam" in line: ebeam = line.split("=")[1].split("\n")[0].strip()
     if "nevents" in line: nevents = line.split("=")[1].split("\n")[0].strip()
+    if "xqcut" in line: xqcut = line.split("=")[1].split("\n")[0].strip()
     if "ptj" in line: ptj = line.split("=")[1].split("\n")[0].strip()
     if "Qcut" in line: Qcut = line.split("=")[1].split("\n")[0].strip()
     if "repeat" in line: repeat_index = line.split("=")[1].split("\n")[0].strip()
+    if "mode" in line: mode = line.split("=")[1].split("\n")[0].strip()
 infile.close()
 orgdir = os.getcwd()
 jobdir = orgdir + "/results/condor_job"
@@ -25,8 +27,12 @@ jobdir = orgdir + "/results/condor_job"
 for i in range(int(repeat_index)):
   for MXd in MXd_array:
     for MY1 in MY1_array:
-        tag0 = "nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut)
-        tag = "nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,i)
+        if mode == "nlo" or mode == "NLO":
+            tag0 = "nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut)
+            tag = "nlo_med%s_dm%s_%s_beam%s_n%s_ptj%s_qcut%s_repeat%s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,i)
+        if mode == "lo" or mode == "LO":
+            tag0 = "lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s"%(str(MY1),str(MXd),model,ebeam,nevents,xqcut)
+            tag = "lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s"%(str(MY1),str(MXd),model,ebeam,nevents,xqcut,i)
         logdir = orgdir + "/results/%s"%tag0
         os.system("mkdir -p %s"%logdir)
         filename=jobdir+"/run_%s.sh"%tag
@@ -35,7 +41,10 @@ for i in range(int(repeat_index)):
         f.write("cd "+orgdir+"\n")
         f.write("export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase \n")
         f.write("source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh \n")
-        f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s %s"%(str(MXd),str(MY1),model,ebeam,nevents,ptj,Qcut,i))
+        if mode == "nlo" or mode == "NLO":
+            f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s %s"%(str(MXd),str(MY1),model,ebeam,nevents,ptj,Qcut,i))
+        if mode == "lo" or mode == "LO":
+            f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s"%(str(MXd),str(MY1),model,ebeam,nevents,xqcut,i))
         f.close()
 
         output =logdir+"/" + tag + ".out"
