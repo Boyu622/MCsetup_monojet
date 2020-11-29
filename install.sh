@@ -17,6 +17,7 @@ exec 3<> install.txt
 echo "install pythia8" >&3
 echo "install collier" >&3
 echo "install ninja" >&3
+echo "install MadAnalysis5" >&3
 exec 3>&-
 
 ./bin/mg5_aMC install.txt

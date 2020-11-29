@@ -35,7 +35,7 @@ for i in range(int(repeat_index)):
         f.write("cd "+orgdir+"\n")
         f.write("export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase \n")
         f.write("source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh \n")
-        f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s %s"%(str(MY1),str(MXd),model,ebeam,nevents,ptj,Qcut,i))
+        f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s %s"%(str(MXd),str(MY1),model,ebeam,nevents,ptj,Qcut,i))
         f.close()
 
         output =logdir+"/" + tag + ".out"
