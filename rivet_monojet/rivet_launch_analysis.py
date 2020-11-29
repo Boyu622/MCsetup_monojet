@@ -4,19 +4,18 @@ if len(sys.argv)<2:
   print "please provide directory that contains all hepmc files you want to analysis"
   sys.exit()
 
-
 os.system("mv rivet_monojet.cc sample.cc")
 os.system("mv rivet_monojet.plot sample.plot")
 os.system("rivet-mkanalysis rivet_monojet")
 os.system("mv sample.cc rivet_monojet.cc")
 os.system("mv sample.plot rivet_monojet.plot")
+os.system("rivet-buildplugin rivet_monojet.cc")
 os.chdir(sys.argv[1])
 
 filestr = " "
 for filename in os.listdir("."):
   if "hepmc" in filename: filestr = filestr + filename + " "
 
-os.system("rivet-buildplugin rivet_monojet.cc")
 os.system("rivet --analysis=rivet_monojet %s"%filestr)
 os.system("rivet-mkhtml --pwd Rivet.yoda:'Title=PYTHIA 8.2'")
 
