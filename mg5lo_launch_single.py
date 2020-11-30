@@ -31,7 +31,7 @@ wdir = "/tmp/%s/"%username
 odir = os.getcwd()
 sdir = odir + "/results/lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s"%(str(MY1),str(MXd),model,ebeam,nevents,xqcut)
 os.system("mkdir -p %s"%sdir)
-infile = open("paths_and_parameters.dat","r")
+infile = open("launch_many_parameters.dat","r")
 for line in infile:
     if "MG5_path" in line: mg5dir = line.split("=")[1].split("\n")[0]
     if "lhapdf_path" in line: os.environ["LD_LIBRARY_PATH"] = line.split("=")[1].split("\n")[0].strip(" ")
