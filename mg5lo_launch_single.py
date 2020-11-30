@@ -83,4 +83,7 @@ os.system("%s/bin/mg5_aMC mg5.txt"%mg5dir)
 os.system("cat /tmp/%s/lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s/Cards/param_card.dat"%(username,str(MY1),str(MXd),model,ebeam,nevents,xqcut,repeat_index))
 os.system("cat /tmp/%s/lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s/Cards/run_card.dat"%(username,str(MY1),str(MXd),model,ebeam,nevents,xqcut,repeat_index))
 os.system("cp /tmp/%s/lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s/Events/run_01/*.hepmc.gz %s/lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s.hepmc.gz"%(username,str(MY1),str(MXd),model,ebeam,nevents,xqcut,repeat_index,sdir,str(MY1),str(MXd),model,ebeam,nevents,xqcut,repeat_index))
+for filename in os.listdir("/tmp/%s/lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s/Events/run_01/"%(username,str(MY1),str(MXd),model,ebeam,nevents,xqcut,repeat_index)):
+  if ".pdf" in filename and "hadron" in filename: os.system("cp /tmp/%s/lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s/Events/run_01/%s %s/lo_hadron_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s.hepmc.gz"%(username,str(MY1),str(MXd),model,ebeam,nevents,xqcut,repeat_index,filename,sdir,str(MY1),str(MXd),model,ebeam,nevents,xqcut,repeat_index))
+  if ".pdf" in filename and "parton" in filename: os.system("cp /tmp/%s/lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s/Events/run_01/%s %s/lo_parton_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s.hepmc.gz"%(username,str(MY1),str(MXd),model,ebeam,nevents,xqcut,repeat_index,filename,sdir,str(MY1),str(MXd),model,ebeam,nevents,xqcut,repeat_index))
 os.chdir(odir)
