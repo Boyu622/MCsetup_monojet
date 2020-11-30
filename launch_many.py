@@ -3,7 +3,7 @@ import os,sys
 MXd_array = []
 MY1_array = []
 
-infile = open("paths_and_parameters.dat","r")
+infile = open("launch_many_parameters.dat","r")
 for line in infile:
     print line
     if "MXd_array" in line:
@@ -12,14 +12,14 @@ for line in infile:
     if "MY1_array" in line:
         for ele in line.split("=")[1].split("[")[1].split("]")[0].split(","):
             MY1_array.append(int(ele))
-    if "model" in line: model = line.split("=")[1].split("\n")[0].strip()
-    if "ebeam" in line: ebeam = line.split("=")[1].split("\n")[0].strip()
-    if "nevents" in line: nevents = line.split("=")[1].split("\n")[0].strip()
-    if "xqcut" in line: xqcut = line.split("=")[1].split("\n")[0].strip()
-    if "ptj" in line: ptj = line.split("=")[1].split("\n")[0].strip()
-    if "Qcut" in line: Qcut = line.split("=")[1].split("\n")[0].strip()
-    if "repeat" in line: repeat_index = line.split("=")[1].split("\n")[0].strip()
-    if "mode" in line: mode = line.split("=")[1].split("\n")[0].strip()
+    if "model" in line: model = line.split("=")[1].split("\n")[0].strip(" ")
+    if "ebeam" in line: ebeam = line.split("=")[1].split("\n")[0].strip(" ")
+    if "nevents" in line: nevents = line.split("=")[1].split("\n")[0].strip(" ")
+    if "xqcut" in line: xqcut = line.split("=")[1].split("\n")[0].strip(" ")
+    if "ptj" in line: ptj = line.split("=")[1].split("\n")[0].strip(" ")
+    if "Qcut" in line: Qcut = line.split("=")[1].split("\n")[0].strip(" ")
+    if "repeat" in line: repeat_index = line.split("=")[1].split("\n")[0].strip(" ")
+    if "mode" in line: mode = line.split("=")[1].split("\n")[0].strip(" ")
 infile.close()
 orgdir = os.getcwd()
 jobdir = orgdir + "/results/condor_job"
@@ -58,7 +58,10 @@ for i in range(int(repeat_index)):
         f_sub.write("error  = " + error + " \n")
         f_sub.write("log  = " + logname + " \n")
         f_sub.write('requirements = (OpSysAndVer =?= "CentOS7")\n')
-        f_sub.write("+JobFlavour = \"nextweek\" \n")
+        if mode == "lo" or mode == "LO":
+            f_sub.write("+JobFlavour = \"workday\" \n")
+        if mode == "nlo" or mode == "NLO":
+            f_sub.write("+JobFlavour = \"nextweek\" \n")
         f_sub.write("queue \n")
         f_sub.close()
         cmd="condor_submit SUB_FILE "+filename_sub+" \n"
