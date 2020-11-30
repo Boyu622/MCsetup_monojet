@@ -30,7 +30,7 @@ or
 
 Here, the masses and single beam energy are in the unit of GeV. The model will be four s-channel dmsimp benchmark models (A1, A2, V1 and V2, see arXiv: 1703.05703). Due to significant loss of events during the merging (NLO) and monojet event cut / veto, and in light of the total time consumed for a single job, it is statistically necessary to repeat the simulation for a point in parameter space where the nevents is recommended to be ~15K with repeat ~15.
 
-We will use the FxFx algorithm (ickkw = 3) for NLO event merging and MLM algorithm (ickkw = 1) for LO event merging. The Qcut, ptj and xqcut are in the unit of GeV, where Qcut should be larger than twice the value of ptj. The merging scale can be validated via pt distribution of the leading, sub-leading and third jet. The relevant plots will be included in our Rivet analysis code.
+We will use the FxFx algorithm (ickkw = 3) for NLO event merging and MLM algorithm (ickkw = 1) for LO event merging. The Qcut, ptj and xqcut are in the unit of GeV, where Qcut should be larger than twice the value of ptj. The merging scale can be validated via pt distributions of the leading, sub-leading and third jet as well as the number of jets distribution. The relevant plots will be included in our Rivet analysis code.
 
 ### Launch Many Jobs
 
