@@ -44,7 +44,7 @@ for i in range(int(repeat_index)):
         if mode == "nlo" or mode == "NLO":
             f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s %s"%(str(MXd),str(MY1),model,ebeam,nevents,ptj,Qcut,i))
         if mode == "lo" or mode == "LO":
-            f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s"%(str(MXd),str(MY1),model,ebeam,nevents,xqcut,i))
+            f.write("python mg5lo_launch_single.py %s %s %s %s %s %s %s"%(str(MXd),str(MY1),model,ebeam,nevents,xqcut,i))
         f.close()
 
         output =logdir+"/" + tag + ".out"
