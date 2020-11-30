@@ -46,6 +46,6 @@ If you want to check things quickly, the validated Rivet analysis code for monoj
 
 [https://github.com/DarkJets-hep/excitedquarks-rivet](https://github.com/DarkJets-hep/excitedquarks-rivet)
 
-Once the Rivet environment is ready. The whole procedure on building analysis, jointing separate runs and making merging / MET histograms can be automatically done by typing:
+Once the Rivet environment is ready. The whole procedure on building analysis, jointing separate runs and making merging / MET histograms can be automatically done by:
 
 `python rivet_launch_analysis.py {path/to/hepmc/dir}`
