@@ -48,4 +48,4 @@ If you want to check things quickly, the validated Rivet analysis code for monoj
 
 Once the Rivet environment is ready. The whole procedure on building analysis, jointing separate runs and making merging / MET histograms can be done by:
 
-`python rivet_launch_analysis.py {path/to/hepmc/dir}`
+`python rivet_launch.py {path/to/hepmc/dir}`
