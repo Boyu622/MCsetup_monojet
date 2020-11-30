@@ -1,6 +1,6 @@
 # MCsetup_monojet
 
-This git repository gives instructions on plotting kinematic distributions at Collider for monojet analysis. We provide MG5 NLO/LO + Pythia8 control code with our validated Rivet analysis. The CERN account is required in this tutorial in order to run `launch_many.py` at lxplus using HTCondor.
+This git repository gives instructions on plotting kinematic distributions at Collider for monojet analysis. We provide MG5 NLO/LO + Pythia8 control code with our validated Rivet analysis for MG5 NLO. The CERN account is required in this tutorial in order to run `launch_many.py` at lxplus using HTCondor.
 
 ## MG5 NLO/LO + Pythia8
 
