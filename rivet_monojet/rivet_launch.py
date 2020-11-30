@@ -1,7 +1,7 @@
 import os,sys
 
 if len(sys.argv)<2: 
-  print "please provide directory that contains all hepmc files you want to analysis"
+  print "please provide directory that contains all hepmc files you want to combine"
   sys.exit()
 
 os.system("mv rivet_monojet.cc sample.cc")
