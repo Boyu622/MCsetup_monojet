@@ -29,6 +29,18 @@ exec 3>&-
 rm -rf install.txt
 rm -rf mytest
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/HEPTools/lhapdf6/lib
+exec 3<> install.txt
+echo "import model DMsimp_s_spin1" >&3
+echo "generate p p > xd xd~ j" >&3
+echo "output mytest" >&3
+echo "launch" >&3
+exec 3>&-
+
+./bin/mg5_aMC install.txt
+
+rm -rf install.txt
+
 cd ..
 
 rm -rf MG5_aMC_v2.7.3.tar.gz
