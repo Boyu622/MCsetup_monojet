@@ -3,6 +3,9 @@
 export URL_TO_MG5="https://launchpad.net/mg5amcnlo/2.0/2.7.x/+download/MG5_aMC_v2.7.3.tar.gz"
 export MG5_DIRNAME="MG5_aMC_v2_7_3"
 
+export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
+source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh
+
 wget ${URL_TO_MG5}
 tar -zxvf `basename ${URL_TO_MG5}`
 
@@ -29,7 +32,7 @@ exec 3>&-
 rm -rf install.txt
 rm -rf mytest
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD/HEPTools/lhapdf6/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${PWD}/HEPTools/lhapdf6/lib
 exec 3<> install.txt
 echo "import model DMsimp_s_spin1" >&3
 echo "generate p p > xd xd~ j" >&3
