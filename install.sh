@@ -22,7 +22,6 @@ echo "install MadAnalysis5" >&3
 echo "import model DMsimp_s_spin1" >&3
 echo "generate p p > xd xd~ j [QCD]" >&3
 echo "output mytest" >&3
-
 exec 3>&-
 
 ./bin/mg5_aMC install.txt
