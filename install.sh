@@ -3,6 +3,7 @@
 export URL_TO_MG5="https://launchpad.net/mg5amcnlo/2.0/2.7.x/+download/MG5_aMC_v2.7.3.tar.gz"
 export MG5_DIRNAME="MG5_aMC_v2_7_3"
 
+#set environment for installation - consistant with HTCondor setup
 export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
 source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh
 
@@ -22,6 +23,7 @@ echo "install collier" >&3
 echo "install ninja" >&3
 echo "install MadAnalysis5" >&3
 
+#run nlo the first time - compile tools
 echo "import model DMsimp_s_spin1" >&3
 echo "generate p p > xd xd~ j [QCD]" >&3
 echo "output mytest" >&3
@@ -32,6 +34,7 @@ exec 3>&-
 rm -rf install.txt
 rm -rf mytest
 
+#run lo the first time - setup PDF
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${PWD}/HEPTools/lhapdf6/lib
 exec 3<> install.txt
 echo "import model DMsimp_s_spin1" >&3
