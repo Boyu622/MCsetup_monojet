@@ -35,6 +35,9 @@ echo "import model DMsimp_s_spin1" >&3
 echo "generate p p > xd xd~ j" >&3
 echo "output mytest" >&3
 echo "launch" >&3
+echo "set pdlabel lhapdf" >&3
+echo "set lhaid 260000" >&3
+echo "set iseed 1234" >&3
 exec 3>&-
 
 ./bin/mg5_aMC install.txt
