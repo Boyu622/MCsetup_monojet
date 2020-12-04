@@ -23,7 +23,7 @@ echo "install collier" >&3
 echo "install ninja" >&3
 echo "install MadAnalysis5" >&3
 
-#run nlo the first time - compile tools
+#run nlo the first time - compile HEP tools
 echo "import model DMsimp_s_spin1" >&3
 echo "generate p p > xd xd~ j [QCD]" >&3
 echo "output mytest" >&3
