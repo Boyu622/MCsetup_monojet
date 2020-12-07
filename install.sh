@@ -21,7 +21,6 @@ exec 3<> install.txt
 echo "install pythia8" >&3
 echo "install collier" >&3
 echo "install ninja" >&3
-echo "install MadAnalysis5" >&3
 
 #run nlo the first time - compile HEP tools
 echo "import model DMsimp_s_spin1" >&3
