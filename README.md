@@ -38,7 +38,7 @@ Launch Many Jobs is achieved by distributing different commands to clusters usin
 
 `python launch_many.py`
 
-For each job, the log file and hepmc file will be collected automatically to the `./results/` folder. The Madanalysis5 results for MG5 LO will be collected as well.
+For each job, the log file and hepmc file will be collected automatically to the `./results/` folder.
 
 ## Rivet
 
