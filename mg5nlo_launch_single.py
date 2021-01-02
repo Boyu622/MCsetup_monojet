@@ -40,7 +40,7 @@ infile.close()
 
 os.chdir(wdir)
 mg5file = open('mg5.txt', 'w')
-mg5file.write('set low_mem_multicore_nlo_generation True \n')
+#mg5file.write('set low_mem_multicore_nlo_generation True \n')
 mg5file.write('import model DMsimp_s_spin1 \n')
 mg5file.write('generate p p > xd xd~ j [QCD] \n')
 mg5file.write('add process p p > xd xd~ j j [QCD] \n')
