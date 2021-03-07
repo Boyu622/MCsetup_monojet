@@ -1,30 +1,26 @@
 import os,sys,pwd
 from exclCalc import *
 
-if len(sys.argv)<8:
-    print "Please pass arguments following: python mg5nlo_launch_single.py {mDM} {Mmed} {model} {Ebeam_single} {nevents} {xqcut} {repeat}"
+if len(sys.argv)<12:
+    print "Please pass arguments following: python mg5nlo_launch_single.py {mDM} {Mmed} {med_type} {gDM} {gq} {gl} {model_tag} {Ebeam_single} {nevents} {xqcut} {repeat}"
     sys.exit()
 else:
     MXd = sys.argv[1]
     MY1 = sys.argv[2]
-    model = sys.argv[3]
-    ebeam = sys.argv[4]
-    nevents = sys.argv[5]
-    xqcut = sys.argv[6]
-    repeat_index = sys.argv[7]
+    med_type = sys.argv[3]
+    gDM = sys.argv[4]
+    gq = sys.argv[5]
+    gl = sys.argv[6]
+    model = sys.argv[7]
+    ebeam = sys.argv[8]
+    nevents = sys.argv[9]
+    xqcut = sys.argv[10]
+    repeat_index = sys.argv[11]
     
-if model == "A1" or model == "a1":
-    gAXd, gVXd, gAq, gVq, gAl, gVl = 1.0, 0.0, 0.25, 0.0, 0.0, 0.0
-    WY1 = totalWidthAxial(float(MY1),float(MXd),0.25,1.0,0.0)
-if model == "A2" or model == "a2":
-    gAXd, gVXd, gAq, gVq, gAl, gVl = 1.0, 0.0, 0.1, 0.0, 0.1, 0.0
-    WY1 = totalWidthAxial(float(MY1),float(MXd),0.1,1.0,0.1)
-if model == "V1" or model == "v1":
-    gAXd, gVXd, gAq, gVq, gAl, gVl = 0.0, 1.0, 0.0, 0.25, 0.0, 0.0
-    WY1 = totalWidthVector(float(MY1),float(MXd),0.25,1.0,0.0)
-if model == "V2" or model == "v2":
-    gAXd, gVXd, gAq, gVq, gAl, gVl = 0.0, 1.0, 0.0, 0.1, 0.0, 0.01
-    WY1 = totalWidthVector(float(MY1),float(MXd),0.1,1.0,0.01)
+if med_type == "Axial" or med_type == "axial":
+    WY1 = totalWidthAxial(float(MY1),float(MXd),float(gq),float(gDM),float(gl))
+if med_type == "Vector" or med_type == "vector":
+    WY1 = totalWidthVector(float(MY1),float(MXd),float(gq),float(gDM),float(gl))
 
 username =  pwd.getpwuid(os.getuid())[0]
 wdir = "/tmp/%s/"%username
