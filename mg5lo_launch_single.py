@@ -18,9 +18,13 @@ else:
     repeat_index = sys.argv[11]
     
 if med_type == "Axial" or med_type == "axial":
-    WY1 = totalWidthAxial(float(MY1),float(MXd),float(gq),float(gDM),float(gl))
+    gVXd, gVq, gVl = 0,0,0
+    gAXd, gAq, gAl = float(gDM), float(gq), float(gl)
+    WY1 = totalWidthAxial(float(MY1),float(MXd),gAq,gAXd,gAl)
 if med_type == "Vector" or med_type == "vector":
-    WY1 = totalWidthVector(float(MY1),float(MXd),float(gq),float(gDM),float(gl))
+    gAXd, gAq, gAl = 0,0,0
+    gVXd, gVq, gVl = float(gDM), float(gq), float(gl)
+    WY1 = totalWidthVector(float(MY1),float(MXd),gVq,gVXd,gVl)
 
 username =  pwd.getpwuid(os.getuid())[0]
 wdir = "/tmp/%s/"%username
