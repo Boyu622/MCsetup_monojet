@@ -13,9 +13,9 @@ for line in infile:
         for ele in line.split("=")[1].split("[")[1].split("]")[0].split(","):
             MY1_array.append(int(ele))
     if "med_type" in line: med_type = line.split("=")[1].split("\n")[0].strip(" ")
-    if "gDM" in line: gDM = line.split("=")[1].split("\n")[0].strip(" ")
-    if "gq" in line: gq = line.split("=")[1].split("\n")[0].strip(" ")
-    if "gl" in line: gl = line.split("=")[1].split("\n")[0].strip(" ")
+    if "gDM" in line and "_gDM" not in line: gDM = line.split("=")[1].split("\n")[0].strip(" ")
+    if "gq" in line and "_gq" not in line: gq = line.split("=")[1].split("\n")[0].strip(" ")
+    if "gl" in line and "_gl" not in line: gl = line.split("=")[1].split("\n")[0].strip(" ")
     if "model_tag" in line: model = line.split("=")[1].split("\n")[0].strip(" ")
     if "ebeam" in line: ebeam = line.split("=")[1].split("\n")[0].strip(" ")
     if "nevents" in line: nevents = line.split("=")[1].split("\n")[0].strip(" ")
