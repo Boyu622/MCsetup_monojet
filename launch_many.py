@@ -12,7 +12,11 @@ for line in infile:
     if "MY1_array" in line:
         for ele in line.split("=")[1].split("[")[1].split("]")[0].split(","):
             MY1_array.append(int(ele))
-    if "model" in line: model = line.split("=")[1].split("\n")[0].strip(" ")
+    if "med_type" in line: med_type = line.split("=")[1].split("\n")[0].strip(" ")
+    if "gDM" in line: line.split("=")[1].split("\n")[0].strip(" ")
+    if "gq" in line: line.split("=")[1].split("\n")[0].strip(" ")
+    if "gl" in line: line.split("=")[1].split("\n")[0].strip(" ")
+    if "model_tag" in line: model = line.split("=")[1].split("\n")[0].strip(" ")
     if "ebeam" in line: ebeam = line.split("=")[1].split("\n")[0].strip(" ")
     if "nevents" in line: nevents = line.split("=")[1].split("\n")[0].strip(" ")
     if "xqcut" in line: xqcut = line.split("=")[1].split("\n")[0].strip(" ").strip("#only for lo")
@@ -44,7 +48,7 @@ for i in range(int(repeat_index)):
         if mode == "nlo" or mode == "NLO":
             f.write("python mg5nlo_launch_single.py %s %s %s %s %s %s %s %s"%(str(MXd),str(MY1),model,ebeam,nevents,ptj,Qcut,i))
         if mode == "lo" or mode == "LO":
-            f.write("python mg5lo_launch_single.py %s %s %s %s %s %s %s"%(str(MXd),str(MY1),model,ebeam,nevents,xqcut,i))
+            f.write("python mg5lo_launch_single.py %s %s %s %s %s %s %s %s %s %s %s"%(str(MXd),str(MY1),med_type,gDM,gq,gl,model,ebeam,nevents,xqcut,i))
         f.close()
 
         output =logdir+"/" + tag + ".out"
