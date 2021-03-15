@@ -191,3 +191,5 @@ namespace Rivet {
   };
 
   DECLARE_RIVET_PLUGIN(rivet_monojet);
+      
+}
