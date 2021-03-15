@@ -10,6 +10,7 @@
 
 namespace Rivet {
 
+      double met_larger_than_150, after_lep_veto, nj_four, min_phi, lead_j_quality, lead_j_pt_eta, met_larger_than_200, met_em0, met_em1, met_em2, met_em3, met_em4, met_em5, met_em6, met_em7, met_em8, met_em9, met_em10, met_em11, met_em12;
 
   class rivet_monojet : public Analysis {
   public:
@@ -23,15 +24,15 @@ namespace Rivet {
       SmearedJets recojets(jets, JET_SMEAR_ATLAS_RUN1);
       declare(recojets, "Jets");
 
-      FinalState electrons(Cuts::abspid == PID::ELECTRON && Cuts::abseta < 2.47 && Cuts::pT > 20*GeV);
+      FinalState electrons(Cuts::abspid == PID::ELECTRON && Cuts::abseta < 2.47 && Cuts::pT > 7*GeV);
       SmearedParticles recoelectrons(electrons, ELECTRON_IDEFF_ATLAS_RUN1_MEDIUM);
       declare(recoelectrons, "Electrons");
 
-      FinalState muons(Cuts::abspid == PID::MUON && Cuts::abseta < 2.50 && Cuts::pT > 10*GeV);
+      FinalState muons(Cuts::abspid == PID::MUON && Cuts::abseta < 2.50 && Cuts::pT > 7*GeV);
       SmearedParticles recomuons(muons, MUON_EFF_ATLAS_RUN1);
       declare(recomuons, "Muons");
 
-      VisibleFinalState calofs(Cuts::abseta < 4.9 && Cuts::abspid != PID::MUON);
+      VisibleFinalState calofs(Cuts::abseta < 4.5 && Cuts::pT > 20*GeV && Cuts::abspid != PID::MUON);
       MissingMomentum met(calofs);
       SmearedMET recomet(met, MET_SMEAR_ATLAS_RUN1);
       declare(recomet, "MET");
@@ -68,21 +69,24 @@ namespace Rivet {
       // Discard jets very close to electrons, or with low track multiplicity and close to muons
       const Jets isojets = filter_discard(jets, [&](const Jet& j) {
           if (any(elecs, deltaRLess(j, 0.2))) return true;
-          if (j.particles(Cuts::abscharge > 0 && Cuts::pT > 0.4*GeV).size() < 3 &&
+          if (j.pT() > 30*GeV && j.particles(Cuts::pT > 0.5*GeV).size() < 3 &&
               any(mus, deltaRLess(j, 0.4))) return true;
           return false;
         });
 
-      // Discard electrons close to remaining jets
+      // Remove electrons deltaR:0.2-0.4 to remaining jets
       const Particles isoelecs = filter_discard(elecs, [&](const Particle& e) {
-          return any(isojets, deltaRLess(e, 0.4));
+          for (const Jet& j : isojets) {
+            if (deltaR(j,e) > 0.2 && deltaR(j,e) < 0.4) return true;
+          }
+          return false;
         });
 
       // Discard muons close to remaining jets
       const Particles isomus = filter_discard(mus, [&](const Particle& m) {
           for (const Jet& j : isojets) {
             if (deltaR(j,m) > 0.4) continue;
-            if (j.particles(Cuts::abscharge > 0 && Cuts::pT > 0.4*GeV).size() > 3) return true;
+            if (j.pT() > 30*GeV && j.particles(Cuts::pT > 0*GeV).size() > 3) return true;
           }
           return false;
         });
@@ -91,30 +95,58 @@ namespace Rivet {
       const Vector3& vet = apply<SmearedMET>(event, "MET").vectorEt();
       const double etmiss = vet.perp();
 
-
-      // Event selection cuts
-      if (etmiss < 250*GeV) vetoEvent;
-      // Require at least one jet with pT > 250 GeV and |eta| < 2.4
-      if (filter_select(isojets, Cuts::pT > 250*GeV && Cuts::abseta < 2.4).empty()) vetoEvent;
-      // Require at most 4 jets with pT > 30 GeV and |eta| < 2.8
-      if (filter_select(isojets, Cuts::pT > 30*GeV).size() > 4) vetoEvent;
-      // Require no isolated jets within |dphi| < 0.4 of the MET vector
-      if (any(isojets, deltaPhiLess(-vet, 0.4))) vetoEvent;
-      // Require no isolated electrons or muons
-      if (!isoelecs.empty() || !isomus.empty()) vetoEvent;
+      // cut flow
+      if (etmiss < 150*GeV) vetoEvent;
+      met_larger_than_150++;
       
-      if (etmiss > 250*GeV && etmiss < 300*GeV) _histem1->fill(etmiss);
-      if (etmiss > 300*GeV && etmiss < 350*GeV) _histem2->fill(etmiss);
-      if (etmiss > 350*GeV && etmiss < 400*GeV) _histem3->fill(etmiss);
-      if (etmiss > 400*GeV && etmiss < 500*GeV) _histem4->fill(etmiss);
-      if (etmiss > 500*GeV && etmiss < 600*GeV) _histem5->fill(etmiss);
-      if (etmiss > 600*GeV && etmiss < 700*GeV) _histem6->fill(etmiss);
-      if (etmiss > 700*GeV && etmiss < 800*GeV) _histem7->fill(etmiss);
-      if (etmiss > 800*GeV && etmiss < 900*GeV) _histem8->fill(etmiss);
-      if (etmiss > 900*GeV && etmiss < 1000*GeV) _histem9->fill(etmiss);
-      if (etmiss > 1000*GeV && etmiss < 1200*GeV) _histem10->fill(etmiss);
-
-
+      if (!isoelecs.empty() || !isomus.empty()) vetoEvent;
+      after_lep_veto++;
+      
+      if (isojets.size() > 4) vetoEvent;
+      nj_four++;
+      
+      if (any(isojets, deltaPhiLess(-vet, 0.4))) vetoEvent;
+      min_phi++;
+      
+      if (filter_select(isojets, Cuts::pT > 150*GeV && Cuts::abseta < 2.4).empty()) vetoEvent;
+      lead_j_pt_eta++;
+      
+      if (etmiss < 200*GeV) vetoEvent;
+      met_larger_than_200++;
+       
+      if (etmiss > 200*GeV && etmiss < 250*GeV) met_em0++;
+      if (etmiss > 250*GeV && etmiss < 300*GeV) {
+      _histem1->fill(etmiss);
+      met_em1++;}
+      if (etmiss > 300*GeV && etmiss < 350*GeV) {
+      _histem2->fill(etmiss);
+      met_em2++;}
+      if (etmiss > 350*GeV && etmiss < 400*GeV) {
+      _histem3->fill(etmiss);
+      met_em3++;}
+      if (etmiss > 400*GeV && etmiss < 500*GeV) {
+      _histem4->fill(etmiss);
+      met_em4++;}
+      if (etmiss > 500*GeV && etmiss < 600*GeV) {
+      _histem5->fill(etmiss);
+      met_em5++;}
+      if (etmiss > 600*GeV && etmiss < 700*GeV) {
+      _histem6->fill(etmiss);
+      met_em6++;}
+      if (etmiss > 700*GeV && etmiss < 800*GeV) {
+      _histem7->fill(etmiss);
+      met_em7++;}
+      if (etmiss > 800*GeV && etmiss < 900*GeV) {
+      _histem8->fill(etmiss);
+      met_em8++;}
+      if (etmiss > 900*GeV && etmiss < 1000*GeV) {
+      _histem9->fill(etmiss);
+      met_em9++;}
+      if (etmiss > 1000*GeV && etmiss < 1100*GeV) {
+      _histem10->fill(etmiss);
+      met_em10++;}
+      if (etmiss > 1100*GeV && etmiss < 1200*GeV) met_em11++;
+      if (etmiss > 1200*GeV) met_em12++;
     }
 
       void finalize() {
@@ -133,12 +165,29 @@ namespace Rivet {
       scale(_histjetpt0, norm/sumOfWeights());
       scale(_histjetpt1, norm/sumOfWeights());
       scale(_histjetpt2, norm/sumOfWeights());
-    }
       
+      cout << "met_larger_than_150: " << met_larger_than_150 << endl;
+      cout << "after_lep_veto: " << after_lep_veto << endl;
+      cout << "nj_four: " << nj_four << endl;
+      cout << "min_phi: " << min_phi << endl;
+      cout << "lead_j_pt_eta: " << lead_j_pt_eta << endl;
+      cout << "met_larger_than_200: " << met_larger_than_200 << endl;
+      cout << "met_em0: " << met_em0 << ", ratio: " << met_em0/met_larger_than_200 << endl;
+      cout << "met_em1: " << met_em1 << ", ratio: " << met_em1/met_larger_than_200 << endl;
+      cout << "met_em2: " << met_em2 << ", ratio: " << met_em2/met_larger_than_200 << endl;
+      cout << "met_em3: " << met_em3 << ", ratio: " << met_em3/met_larger_than_200 << endl;
+      cout << "met_em4: " << met_em4 << ", ratio: " << met_em4/met_larger_than_200 << endl;
+      cout << "met_em5: " << met_em5 << ", ratio: " << met_em5/met_larger_than_200 << endl;
+      cout << "met_em6: " << met_em6 << ", ratio: " << met_em6/met_larger_than_200 << endl;
+      cout << "met_em7: " << met_em7 << ", ratio: " << met_em7/met_larger_than_200 << endl;
+      cout << "met_em8: " << met_em8 << ", ratio: " << met_em8/met_larger_than_200 << endl;
+      cout << "met_em9: " << met_em9 << ", ratio: " << met_em9/met_larger_than_200 << endl;
+      cout << "met_em10: " << met_em10 << ", ratio: " << met_em10/met_larger_than_200 << endl;
+      cout << "met_em11: " << met_em11 << ", ratio: " << met_em11/met_larger_than_200 << endl;
+      cout << "met_em12: " << met_em12 << ", ratio: " << met_em12/met_larger_than_200 << endl;      
+    }
       Histo1DPtr _histnjets, _histjetpt0, _histjetpt1, _histjetpt2, _histem1, _histem2, _histem3, _histem4, _histem5, _histem6, _histem7, _histem8, _histem9, _histem10;
 
   };
 
   DECLARE_RIVET_PLUGIN(rivet_monojet);
-
-}
