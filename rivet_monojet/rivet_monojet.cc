@@ -166,12 +166,12 @@ namespace Rivet {
       scale(_histjetpt1, norm/sumOfWeights());
       scale(_histjetpt2, norm/sumOfWeights());
       
-      cout << "met_larger_than_150: " << met_larger_than_150 << ", ratio: " << met_em0/met_larger_than_150 << endl;
-      cout << "after_lep_veto: " << after_lep_veto << ", ratio: " << met_em0/met_larger_than_150 << endl;
-      cout << "nj_four: " << nj_four << ", ratio: " << met_em0/met_larger_than_150 << endl;
-      cout << "min_phi: " << min_phi << ", ratio: " << met_em0/met_larger_than_150 << endl;
-      cout << "lead_j_pt_eta: " << lead_j_pt_eta << ", ratio: " << met_em0/met_larger_than_150 << endl;
-      cout << "met_larger_than_200: " << met_larger_than_200 << ", ratio: " << met_em0/met_larger_than_150 << endl;
+      cout << "met_larger_than_150: " << met_larger_than_150 << ", ratio: " << met_larger_than_150/met_larger_than_150 << endl;
+      cout << "after_lep_veto: " << after_lep_veto << ", ratio: " << after_lep_veto/met_larger_than_150 << endl;
+      cout << "nj_four: " << nj_four << ", ratio: " << nj_four/met_larger_than_150 << endl;
+      cout << "min_phi: " << min_phi << ", ratio: " << min_phi/met_larger_than_150 << endl;
+      cout << "lead_j_pt_eta: " << lead_j_pt_eta << ", ratio: " << lead_j_pt_eta/met_larger_than_150 << endl;
+      cout << "met_larger_than_200: " << met_larger_than_200 << ", ratio: " << met_larger_than_200/met_larger_than_150 << endl;
       cout << "met_em0: " << met_em0 << ", ratio: " << met_em0/met_larger_than_150 << endl;
       cout << "met_em1: " << met_em1 << ", ratio: " << met_em1/met_larger_than_150 << endl;
       cout << "met_em2: " << met_em2 << ", ratio: " << met_em2/met_larger_than_150 << endl;
