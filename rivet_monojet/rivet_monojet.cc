@@ -166,25 +166,25 @@ namespace Rivet {
       scale(_histjetpt1, norm/sumOfWeights());
       scale(_histjetpt2, norm/sumOfWeights());
       
-      cout << "met_larger_than_150: " << met_larger_than_150 << endl;
-      cout << "after_lep_veto: " << after_lep_veto << endl;
-      cout << "nj_four: " << nj_four << endl;
-      cout << "min_phi: " << min_phi << endl;
-      cout << "lead_j_pt_eta: " << lead_j_pt_eta << endl;
-      cout << "met_larger_than_200: " << met_larger_than_200 << endl;
-      cout << "met_em0: " << met_em0 << ", ratio: " << met_em0/met_larger_than_200 << endl;
-      cout << "met_em1: " << met_em1 << ", ratio: " << met_em1/met_larger_than_200 << endl;
-      cout << "met_em2: " << met_em2 << ", ratio: " << met_em2/met_larger_than_200 << endl;
-      cout << "met_em3: " << met_em3 << ", ratio: " << met_em3/met_larger_than_200 << endl;
-      cout << "met_em4: " << met_em4 << ", ratio: " << met_em4/met_larger_than_200 << endl;
-      cout << "met_em5: " << met_em5 << ", ratio: " << met_em5/met_larger_than_200 << endl;
-      cout << "met_em6: " << met_em6 << ", ratio: " << met_em6/met_larger_than_200 << endl;
-      cout << "met_em7: " << met_em7 << ", ratio: " << met_em7/met_larger_than_200 << endl;
-      cout << "met_em8: " << met_em8 << ", ratio: " << met_em8/met_larger_than_200 << endl;
-      cout << "met_em9: " << met_em9 << ", ratio: " << met_em9/met_larger_than_200 << endl;
-      cout << "met_em10: " << met_em10 << ", ratio: " << met_em10/met_larger_than_200 << endl;
-      cout << "met_em11: " << met_em11 << ", ratio: " << met_em11/met_larger_than_200 << endl;
-      cout << "met_em12: " << met_em12 << ", ratio: " << met_em12/met_larger_than_200 << endl;      
+      cout << "met_larger_than_150: " << met_larger_than_150 << ", ratio: " << met_em0/met_larger_than_150 << endl;
+      cout << "after_lep_veto: " << after_lep_veto << ", ratio: " << met_em0/met_larger_than_150 << endl;
+      cout << "nj_four: " << nj_four << ", ratio: " << met_em0/met_larger_than_150 << endl;
+      cout << "min_phi: " << min_phi << ", ratio: " << met_em0/met_larger_than_150 << endl;
+      cout << "lead_j_pt_eta: " << lead_j_pt_eta << ", ratio: " << met_em0/met_larger_than_150 << endl;
+      cout << "met_larger_than_200: " << met_larger_than_200 << ", ratio: " << met_em0/met_larger_than_150 << endl;
+      cout << "met_em0: " << met_em0 << ", ratio: " << met_em0/met_larger_than_150 << endl;
+      cout << "met_em1: " << met_em1 << ", ratio: " << met_em1/met_larger_than_150 << endl;
+      cout << "met_em2: " << met_em2 << ", ratio: " << met_em2/met_larger_than_150 << endl;
+      cout << "met_em3: " << met_em3 << ", ratio: " << met_em3/met_larger_than_150 << endl;
+      cout << "met_em4: " << met_em4 << ", ratio: " << met_em4/met_larger_than_150 << endl;
+      cout << "met_em5: " << met_em5 << ", ratio: " << met_em5/met_larger_than_150 << endl;
+      cout << "met_em6: " << met_em6 << ", ratio: " << met_em6/met_larger_than_150 << endl;
+      cout << "met_em7: " << met_em7 << ", ratio: " << met_em7/met_larger_than_150 << endl;
+      cout << "met_em8: " << met_em8 << ", ratio: " << met_em8/met_larger_than_150 << endl;
+      cout << "met_em9: " << met_em9 << ", ratio: " << met_em9/met_larger_than_150 << endl;
+      cout << "met_em10: " << met_em10 << ", ratio: " << met_em10/met_larger_than_150 << endl;
+      cout << "met_em11: " << met_em11 << ", ratio: " << met_em11/met_larger_than_150 << endl;
+      cout << "met_em12: " << met_em12 << ", ratio: " << met_em12/met_larger_than_150 << endl;      
     }
       Histo1DPtr _histnjets, _histjetpt0, _histjetpt1, _histjetpt2, _histem1, _histem2, _histem3, _histem4, _histem5, _histem6, _histem7, _histem8, _histem9, _histem10;
 
