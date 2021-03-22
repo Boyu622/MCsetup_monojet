@@ -32,7 +32,7 @@ namespace Rivet {
       SmearedParticles recomuons(muons, MUON_EFF_ATLAS_RUN1);
       declare(recomuons, "Muons");
 
-      VisibleFinalState calofs(Cuts::abseta < 4.5 && Cuts::pT > 20*GeV && Cuts::abspid != PID::MUON);
+      VisibleFinalState calofs(Cuts::abseta < 4.5 && Cuts::pT > 20*GeV);
       MissingMomentum met(calofs);
       SmearedMET recomet(met, MET_SMEAR_ATLAS_RUN1);
       declare(recomet, "MET");
