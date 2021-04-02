@@ -2,8 +2,6 @@ from __future__ import division
 import math
 import numpy as np
 from array import array
-
-
     
 # ======================== Partial widths ============================
 
@@ -77,16 +75,3 @@ def totalWidthAxial(M, mDM, gq, gDM, gl) :
 
 def totalWidthVector(M, mDM, gq, gDM, gl) :
     return width_vector_q(M, gq) + width_vector_DM(M, mDM, gDM) + width_vector_l(M, gl) + width_vector_nu(M, gl)
-
-# ======================== Dijet family conversions ============================
-
-#calculate the quark coupling in the quark-only model (analysis limits) in terms of the quark coupling g' in the full model (all decay channels) 
-def gqPrimeAxial (M, mDM, gq, gDM, gl):
-    totalWidth = totalWidthAxial(M, mDM, gq, gDM, gl)
-    gprime = math.sqrt( 1/(width_axial_q(M, 1)) * width_axial_q(M, gq)**2 / totalWidth )
-    return gprime  
-
-def gqPrimeVector(M, mDM, gq, gDM, gl):
-    totalWidth = totalWidthVector(M, mDM, gq, gDM, gl)
-    gprime = math.sqrt( 1/(width_vector_q(M, 1)) * width_axial_q(M, gq)**2 / totalWidth )
-    return gprime
