@@ -17,37 +17,25 @@ unzip DMsimp_s_spin1_v2.0.zip
 
 cd ..
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${PWD}/HEPTools/lhapdf6/lib
 exec 3<> install.txt
 echo "install pythia8" >&3
-echo "install collier" >&3
-echo "install ninja" >&3
+echo "install MadAnalysis5" >&3
 
-#run nlo the first time - compile HEP tools
+#run lo the first time - setup PDF
 echo "import model DMsimp_s_spin1" >&3
-echo "generate p p > xd xd~ j [QCD]" >&3
+echo "generate p p > xd xd~ j" >&3
 echo "output mytest" >&3
+echo "launch" >&3
+echo "set pdlabel nn23lo1" >&3
+echo "set lhaid 230000" >&3
+echo "set iseed 222" >&3
 exec 3>&-
 
 ./bin/mg5_aMC install.txt
 
 rm -rf install.txt
 rm -rf mytest
-
-#run lo the first time - setup PDF
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${PWD}/HEPTools/lhapdf6/lib
-exec 3<> install.txt
-echo "import model DMsimp_s_spin1" >&3
-echo "generate p p > xd xd~ j" >&3
-echo "output mytest" >&3
-echo "launch" >&3
-echo "set pdlabel lhapdf" >&3
-echo "set lhaid 260000" >&3
-echo "set iseed 1234" >&3
-exec 3>&-
-
-./bin/mg5_aMC install.txt
-
-rm -rf install.txt
 
 cd ..
 
