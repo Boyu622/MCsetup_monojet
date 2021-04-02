@@ -2,7 +2,7 @@ import os,sys,pwd
 from exclCalc import *
 
 if len(sys.argv)<12:
-    print "Please pass arguments following: python mg5nlo_launch_single.py {mDM} {Mmed} {med_type} {gDM} {gq} {gl} {model_tag} {Ebeam_single} {nevents} {xqcut} {repeat}"
+    print "Please pass arguments following: python mg5nlo_launch_single.py {mDM} {Mmed} {med_type} {gDM} {gq} {gl} {model_tag} {Ebeam_single} {nevents} {xqcut: provide value if do two processes} {repeat}"
     sys.exit()
 else:
     MXd = sys.argv[1]
@@ -40,11 +40,12 @@ infile.close()
 os.chdir(wdir)
 mg5file = open('mg5.txt', 'w')
 mg5file.write('import model DMsimp_s_spin1 \n')
-mg5file.write('generate p p > xd xd~ j @0 \n')
-mg5file.write('add process p p > xd xd~ j j @1 \n')
+mg5file.write('generate p p > xd xd~ j \n')
+if float(xqcut): mg5file.write('add process p p > xd xd~ j j \n')
 mg5file.write('output lo_med%s_dm%s_%s_beam%s_n%s_xqcut%s_repeat%s \n'%(str(MY1),str(MXd),model,ebeam,nevents,xqcut,repeat_index))
 mg5file.write('launch \n')
 mg5file.write('shower=Pythia8 \n')
+mg5file.write('analysis=MadAnalysis5 \n')
 mg5file.write('set my1 %s \n'%str(MY1))
 mg5file.write('set mxd %s \n'%str(MXd))
 mg5file.write('set wy1 %s \n'%str(WY1))
@@ -76,7 +77,7 @@ mg5file.write('set nevents %s \n'%nevents)
 mg5file.write('set pdlabel nn23lo1 \n')
 mg5file.write('set lhaid 230000 \n')
 mg5file.write('set xptj 150 \n')
-mg5file.write('set xqcut %s \n'%xqcut)
+if float(xqcut): mg5file.write('set xqcut %s \n'%xqcut)
 mg5file.write('set use_syst False \n')
 mg5file.close()
 
