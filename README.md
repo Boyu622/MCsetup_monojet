@@ -1,10 +1,8 @@
 # MCsetup_monojet
 
-This git repository gives instructions on plotting kinematic distributions at Collider for monojet analysis. We provide MG5 NLO/LO + Pythia8 control code with our validated Rivet analysis. The CERN account is required in this tutorial in order to run `launch_many.py` at lxplus using HTCondor.
+This git repository gives instructions on getting mono-jet cut flow as well as MET kinematic distribution for a truth level simulation of Collider Phenomenology following the ATLAS analysis (arxiv: 2102.10874). We provide MG5 LO + Pythia8 control code with our validated Rivet analysis. `launch_many.py` runs at lxplus using HTCondor (hence a CERN account is required).
 
-## MG5 NLO/LO + Pythia8
-
-It is not suggested to run `mg5nlo_launch_single.py` directly since the NLO process will take a few days.
+## MG5 LO + Pythia8
 
 ### Installation
 
@@ -12,25 +10,21 @@ To install MG5 and Pythia8, simply type:
 
 `./install.sh`
 
-This will also download our validated s-channel dmsimp spin-1 Madgraph UFO (recommended in this analysis).
+This will also download MadAnalysis5 and our validated s-channel dmsimp spin-1 Madgraph UFO.
 
 ### Launch Single Job
 
-MG5 simulation requires setup on model parameters. In this case, one should set mDM, Mmed, gl, gq, gDM and the mediator width, where functions encoded in `exclCalc.py` will handle the width calculation using equations from arXiv: 1507.00966.
+MG5 simulation requires setup on model parameters. In this case, one should set mDM, Mmed, mediator type, gDM, gl, gq and the mediator width, where functions encoded in `exclCalc.py` will handle the width calculation using equations from arXiv: 1507.00966.
 
-Run parameters should also be specified. One can very beam energy, nevents (total events number), xqcut (merging scale, LO), ptj (minimum transverse momentum cut on the jets, NLO) and Qcut (merging scale, NLO).
+Run parameters should also be specified. One can very beam energy, nevents (total events number) and xqcut (merging scale, LO). Non-value xqcut will be regarded as 1 jet multiplicity only simulation without merging.
 
 Therefore, one runs the code following:
 
-`python mg5nlo_launch_single.py {mDM} {Mmed} {model} {Ebeam_single} {nevents} {ptj} {Qcut} {repeat}`
+`python mg5lo_launch_single.py {mDM} {Mmed} {med_type} {gDM} {gq} {gl} {model_tag} {Ebeam_single} {nevents} {xqcut: provide value if do two processes} {repeat}`
 
-or
+Here, the masses and single beam energy are in the unit of GeV. Due to significant loss of events during the merging and monojet event cut / veto, and in light of the total time consumed for a single job, it is statistically necessary to repeat the simulation for a point in parameter space using lunch many jobs feature.
 
-`python mg5lo_launch_single.py {mDM} {Mmed} {model} {Ebeam_single} {nevents} {xqcut} {repeat}`
-
-Here, the masses and single beam energy are in the unit of GeV. The model will be four s-channel dmsimp benchmark models (A1, A2, V1 and V2, see arXiv: 1703.05703). Due to significant loss of events during the merging (both NLO and LO) and monojet event cut / veto, and in light of the total time consumed for a single job, it is statistically necessary to repeat the simulation for a point in parameter space where the nevents is recommended to be ~15K with repeat ~15.
-
-We will use the FxFx algorithm (ickkw = 3) for NLO event merging and MLM algorithm (ickkw = 1) for LO event merging. The Qcut, ptj and xqcut are in the unit of GeV, where Qcut should be larger than twice the value of ptj. The merging scale can be validated via pt distributions of the leading, sub-leading and third jet as well as the number of jets distribution. The relevant plots will be included in our Rivet analysis code.
+We will use MLM algorithm (ickkw = 1) for LO event merging, and the corresponding xqcut is in the unit of GeV. The merging scale can be validated via pt distributions of the leading, sub-leading and third jet as well as the number of jets distribution.
 
 ### Launch Many Jobs
 
@@ -46,6 +40,6 @@ If you want to check things quickly, the validated Rivet analysis code for monoj
 
 [https://github.com/DarkJets-hep/excitedquarks-rivet](https://github.com/DarkJets-hep/excitedquarks-rivet)
 
-Once the Rivet environment is ready. The whole procedure on building analysis, jointing separate runs and making merging / MET histograms can be done by:
+Once the Rivet environment is ready. The whole procedure on setup, jointing separate runs and doing analysis can be done by:
 
 `python rivet_launch.py {path/to/hepmc/dir}`
