@@ -21,21 +21,17 @@ namespace Rivet {
       declare(FastJets(cnfs, FastJets::ANTIKT, 0.4), "JS");
 
       FastJets jets(FinalState(Cuts::abseta < 4.9), FastJets::ANTIKT, 0.4);
-      SmearedJets recojets(jets, JET_SMEAR_ATLAS_RUN1);
-      declare(recojets, "Jets");
+      declare(jets, "Jets");
 
       FinalState electrons(Cuts::abspid == PID::ELECTRON && Cuts::abseta < 2.47 && Cuts::pT > 7*GeV);
-      SmearedParticles recoelectrons(electrons, ELECTRON_IDEFF_ATLAS_RUN1_MEDIUM);
-      declare(recoelectrons, "Electrons");
+      declare(electrons, "Electrons");
 
       FinalState muons(Cuts::abspid == PID::MUON && Cuts::abseta < 2.50 && Cuts::pT > 7*GeV);
-      SmearedParticles recomuons(muons, MUON_EFF_ATLAS_RUN1);
-      declare(recomuons, "Muons");
+      declare(muons, "Muons");
 
       VisibleFinalState calofs(Cuts::abseta < 4.5 && Cuts::pT > 20*GeV);
       MissingMomentum met(calofs);
-      SmearedMET recomet(met, MET_SMEAR_ATLAS_RUN1);
-      declare(recomet, "MET");
+      declare(met, "MET");
 
       book(_histnjets ,"njets", 60, 0, 300);
       book(_histjetpt0 ,"leading_jet_pt", 236, 20, 1200);
@@ -102,7 +98,7 @@ namespace Rivet {
       if (!isoelecs.empty() || !isomus.empty()) vetoEvent;
       after_lep_veto++;
       
-      if (isojets.size() > 4) vetoEvent;
+      if (isojets.size() > 3) vetoEvent;
       nj_four++;
       
       if (any(isojets, deltaPhiLess(-vet, 0.4))) vetoEvent;
