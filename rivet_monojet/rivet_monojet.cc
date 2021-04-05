@@ -21,20 +21,20 @@ namespace Rivet {
       declare(FastJets(cnfs, FastJets::ANTIKT, 0.4), "JS");
           
       FastJets jets(FinalState(Cuts::abseta < 4.9), FastJets::ANTIKT, 0.4);
-      SmearedJets recojets(jets, JET_SMEAR_ATLAS_RUN2);
+      SmearedJets recojets(jets, JET_SMEAR_ATLAS_RUN1);
       declare(recojets, "Jets");
 
       FinalState electrons(Cuts::abspid == PID::ELECTRON && Cuts::abseta < 2.47 && Cuts::pT > 7*GeV);
-      SmearedParticles recoelectrons(electrons, ELECTRON_IDEFF_ATLAS_RUN2_MEDIUM);
+      SmearedParticles recoelectrons(electrons, ELECTRON_IDEFF_ATLAS_RUN1_MEDIUM);
       declare(recoelectrons, "Electrons");
 
       FinalState muons(Cuts::abspid == PID::MUON && Cuts::abseta < 2.50 && Cuts::pT > 7*GeV);
-      SmearedParticles recomuons(muons, MUON_EFF_ATLAS_RUN2);
+      SmearedParticles recomuons(muons, MUON_EFF_ATLAS_RUN1);
       declare(recomuons, "Muons");
 
       VisibleFinalState calofs(Cuts::abseta < 4.5 && Cuts::pT > 20*GeV);
       MissingMomentum met(calofs);
-      SmearedMET recomet(met, MET_SMEAR_ATLAS_RUN2);
+      SmearedMET recomet(met, MET_SMEAR_ATLAS_RUN1);
       declare(recomet, "MET");
 
       book(_histnjets ,"njets", 60, 0, 300);
