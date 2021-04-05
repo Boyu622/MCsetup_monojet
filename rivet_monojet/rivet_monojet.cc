@@ -102,7 +102,7 @@ namespace Rivet {
       if (!isoelecs.empty() || !isomus.empty()) vetoEvent;
       after_lep_veto++;
       
-      if (isojets.size() > 3) vetoEvent;
+      if (isojets.size() > 4) vetoEvent;
       nj_four++;
       
       if (any(isojets, deltaPhiLess(-vet, 0.4))) vetoEvent;
