@@ -19,19 +19,23 @@ namespace Rivet {
     void init() {
       const FinalState cnfs;
       declare(FastJets(cnfs, FastJets::ANTIKT, 0.4), "JS");
-
+          
       FastJets jets(FinalState(Cuts::abseta < 4.9), FastJets::ANTIKT, 0.4);
-      declare(jets, "Jets");
+      SmearedJets recojets(jets, JET_SMEAR_ATLAS_RUN2);
+      declare(recojets, "Jets");
 
       FinalState electrons(Cuts::abspid == PID::ELECTRON && Cuts::abseta < 2.47 && Cuts::pT > 7*GeV);
-      declare(electrons, "Electrons");
+      SmearedParticles recoelectrons(electrons, ELECTRON_IDEFF_ATLAS_RUN2_MEDIUM);
+      declare(recoelectrons, "Electrons");
 
       FinalState muons(Cuts::abspid == PID::MUON && Cuts::abseta < 2.50 && Cuts::pT > 7*GeV);
-      declare(muons, "Muons");
+      SmearedParticles recomuons(muons, MUON_EFF_ATLAS_RUN2);
+      declare(recomuons, "Muons");
 
       VisibleFinalState calofs(Cuts::abseta < 4.5 && Cuts::pT > 20*GeV);
       MissingMomentum met(calofs);
-      declare(met, "MET");
+      SmearedMET recomet(met, MET_SMEAR_ATLAS_RUN2);
+      declare(recomet, "MET");
 
       book(_histnjets ,"njets", 60, 0, 300);
       book(_histjetpt0 ,"leading_jet_pt", 236, 20, 1200);
